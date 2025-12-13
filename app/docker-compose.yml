@@ -1,0 +1,11 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - model_data:/app
+    restart: unless-stopped
+
+volumes:
+  model_data:

@@ -1,0 +1,2 @@
+fastapi[standard]==0.124.4
+fastai==2.8.5
