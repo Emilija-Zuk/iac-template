@@ -27,3 +27,7 @@ variable "az" {
   description = "availability zone to use (single az)"
   type        = string
 }
+
+variable "app_port" {
+  type = number
+}

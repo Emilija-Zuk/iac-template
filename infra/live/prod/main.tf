@@ -15,3 +15,11 @@ module "network" {
   private_subnet_cidr = var.private_subnet_cidr
   az                  = var.az
 }
+
+module "security" {
+  source = "../../modules/security"
+
+  project_name = var.project_name
+  vpc_id       = module.network.vpc_id
+  app_port =    var.app_port
+}
