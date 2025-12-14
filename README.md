@@ -30,3 +30,16 @@ Future improvements:
 - store secrets in Secrets Manager
 - restrict egress where possible (VPC endpoints for ECR and CloudWatch Logs, no public internet from tasks)  
 
+## Application container
+
+This repository includes a small FastAPI application packaged as a Docker container to demonstrate application delivery on ECS Fargate.
+
+The service exposes a simple API for training and running a simple machine-learning model and is used as an example workload for the infrastructure.
+
+### Run locally
+
+Docker and Docker Compose are required.
+
+```bash
+cd ./app
+docker compose up --build
