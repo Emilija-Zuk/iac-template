@@ -1,7 +1,12 @@
+locals {
+  # map az to cidr 
+  public_subnets  = zipmap(var.azs, var.public_subnet_cidrs)
+  private_subnets = zipmap(var.azs, var.private_subnet_cidrs)
+}
+
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
 
- 
   enable_dns_hostnames = true
 
   tags = {
@@ -10,24 +15,28 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "public" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = var.public_subnet_cidr
-  availability_zone = var.az
+  for_each = local.public_subnets
 
-  map_public_ip_on_launch = true # remove later?
+  vpc_id            = aws_vpc.main.id
+  availability_zone = each.key
+  cidr_block        = each.value
+
+  map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-public-subnet"
+    Name = "${var.project_name}-public-${each.key}"
   }
 }
 
 resource "aws_subnet" "private" {
+  for_each = local.private_subnets
+
   vpc_id            = aws_vpc.main.id
-  cidr_block        = var.private_subnet_cidr
-  availability_zone = var.az
+  availability_zone = each.key
+  cidr_block        = each.value
 
   tags = {
-    Name = "${var.project_name}-private-subnet"
+    Name = "${var.project_name}-private-${each.key}"
   }
 }
 
@@ -52,7 +61,10 @@ resource "aws_route_table" "public" {
   }
 }
 
+# attach the public route table to every public subnet
 resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
+  for_each = aws_subnet.public
+
+  subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
 }

@@ -8,17 +8,17 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "public_subnet_cidr" {
-  description = "cidr block for the public subnet"
-  type        = string
+variable "azs" {
+  description = "availability zones to use"
+  type        = list(string)
 }
 
-variable "private_subnet_cidr" {
-  description = "cidr block for the private subnet"
-  type        = string
+variable "public_subnet_cidrs" {
+  description = "public subnet cidrs"
+  type        = list(string)
 }
 
-variable "az" {
-  description = "availability zone to use (single az)"
-  type        = string
+variable "private_subnet_cidrs" {
+  description = "private subnet cidrs"
+  type        = list(string)
 }
