@@ -13,3 +13,4 @@ app_port = 8000
 
 health_check_path = "/health"
 
+log_retention_days = 7

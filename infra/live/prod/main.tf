@@ -37,4 +37,13 @@ module "alb" {
   health_check_path = var.health_check_path
 }
 
+module "ecr" {
+  source = "../../modules/ecr"
+  project_name = var.project_name
+}
 
+module "ecs" {
+  source = "../../modules/ecs"
+  project_name        = var.project_name
+  log_retention_days  = var.log_retention_days
+}
