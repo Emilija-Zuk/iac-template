@@ -27,3 +27,10 @@ variable "private_subnet_cidrs" {
 variable "app_port" {
   type = number
 }
+
+variable "health_check_path" {
+  description = "alb target group health check path"
+  type        = string
+  default     = "/"
+}
+
