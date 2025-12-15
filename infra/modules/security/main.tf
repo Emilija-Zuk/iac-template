@@ -42,3 +42,28 @@ resource "aws_vpc_security_group_egress_rule" "ecs_all" {
   ip_protocol       = "-1"
 }
 
+
+
+resource "aws_security_group" "vpce" {
+  name        = "${var.project_name}-vpce-sg"
+  description = "allow https access to vpc interface endpoints"
+  vpc_id      = var.vpc_id
+}
+
+# vpce inbound: https from inside vpc
+resource "aws_vpc_security_group_ingress_rule" "vpce_https" {
+  security_group_id = aws_security_group.vpce.id
+  cidr_ipv4         = var.vpc_cidr
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+}
+
+# vpce outbound: allow all
+resource "aws_vpc_security_group_egress_rule" "vpce_all" {
+  security_group_id = aws_security_group.vpce.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+}
+
+

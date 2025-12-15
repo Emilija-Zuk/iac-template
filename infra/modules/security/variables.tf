@@ -9,3 +9,8 @@ variable "vpc_id" {
 variable "app_port" {
   type = number
 }
+
+variable "vpc_cidr" {
+  description = "vpc cidr for allowing internal https"
+  type        = string
+}
