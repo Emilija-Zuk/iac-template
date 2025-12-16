@@ -43,11 +43,28 @@ module "ecr" {
   project_name = var.project_name
 }
 
+
 module "ecs" {
   source = "../../modules/ecs"
-  project_name        = var.project_name
-  log_retention_days  = var.log_retention_days
+
+  project_name       = var.project_name
+  region             = var.region
+  log_retention_days = var.log_retention_days
+
+  private_subnet_ids = module.network.private_subnet_ids
+  ecs_sg_id          = module.security.ecs_sg_id
+  target_group_arn   = module.alb.target_group_arn
+
+  container_image = "${module.ecr.repository_url}:${var.image_tag}"
+  app_port        = var.app_port
+
+  desired_count = var.desired_count
+  cpu           = var.cpu
+  memory        = var.memory
+
+  depends_on = [module.alb]
 }
+
 
 module "vpc_endpoints" {
   source = "../../modules/vpc_endpoints"

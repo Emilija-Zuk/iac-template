@@ -31,10 +31,26 @@ variable "app_port" {
 variable "health_check_path" {
   description = "alb target group health check path"
   type        = string
-  default     = "/"
 }
 
 variable "log_retention_days" {
   type    = number
   default = 7
 }
+
+variable "desired_count" {
+  type    = number
+}
+
+variable "cpu" {
+  type    = number
+}
+
+variable "memory" {
+  type    = number
+}
+
+variable "image_tag" {
+  type = string
+}
+

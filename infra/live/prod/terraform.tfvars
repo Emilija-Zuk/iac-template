@@ -14,3 +14,9 @@ app_port = 8000
 health_check_path = "/health"
 
 log_retention_days = 7
+
+desired_count = 1
+cpu = 512
+memory = 1024
+
+image_tag = "latest"
