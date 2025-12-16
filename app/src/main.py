@@ -16,6 +16,9 @@ class PredictIn(BaseModel):
     x2: float
     x3: float
 
+class TrainIn(BaseModel):
+    action: str    
+
 # fake data to train the model - 200 rows
 def make_tiny_data(n = 200):
     rows = []
@@ -44,8 +47,12 @@ def health():
     return {"status": "ok"}
 
 @app.post("/train")
-def train():
+def train(body: TrainIn):
     global learn
+
+    # simple guard
+    if body.action != "train":
+        raise HTTPException(status_code=403, detail="invalid action")
 
     df = make_tiny_data()
 
