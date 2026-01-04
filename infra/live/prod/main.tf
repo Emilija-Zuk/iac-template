@@ -53,7 +53,7 @@ module "ecs" {
 
   private_subnet_ids = module.network.private_subnet_ids
   ecs_sg_id          = module.security.ecs_sg_id
-  target_group_arn   = module.alb.target_group_arn
+  target_group_arn   = module.alb.target_group_blue_arn
 
   container_image = "${module.ecr.repository_url}:${var.image_tag}"
   app_port        = var.app_port
