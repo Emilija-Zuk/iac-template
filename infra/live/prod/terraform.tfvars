@@ -20,3 +20,6 @@ cpu = 512
 memory = 1024
 
 image_tag = "latest"
+
+termination_wait_time = 5
+deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
